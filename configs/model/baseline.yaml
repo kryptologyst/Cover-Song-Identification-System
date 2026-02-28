@@ -1,0 +1,25 @@
+# @package model
+
+_target_: src.models.baseline.BaselineCoverSongIdentifier
+
+name: "baseline"
+feature_extractor:
+  _target_: src.features.audio_features.AudioFeatureExtractor
+  sample_rate: 22050
+  n_fft: 2048
+  hop_length: 512
+  n_mels: 128
+  n_mfcc: 13
+  chroma_bins: 12
+  spectral_contrast_bins: 7
+  tempo_bins: 1
+  rhythm_bins: 1
+
+classifier:
+  _target_: sklearn.svm.SVC
+  kernel: "rbf"
+  C: 1.0
+  gamma: "scale"
+  probability: true
+
+similarity_threshold: 0.5

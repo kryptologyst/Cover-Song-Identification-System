@@ -1,0 +1,59 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - model: baseline
+  - data: synthetic
+  - training: default
+
+# Experiment settings
+experiment_name: "cover_song_identification"
+seed: 42
+device: "auto"  # auto, cpu, cuda, mps
+
+# Paths
+data_dir: "data"
+checkpoint_dir: "checkpoints"
+log_dir: "logs"
+assets_dir: "assets"
+
+# Privacy settings
+privacy_mode: true
+anonymize_filenames: true
+log_level: "INFO"
+
+# Model settings
+model:
+  name: "baseline"
+  feature_extractor:
+    sample_rate: 22050
+    n_fft: 2048
+    hop_length: 512
+    n_mels: 128
+    n_mfcc: 13
+    chroma_bins: 12
+    spectral_contrast_bins: 7
+
+# Data settings
+data:
+  name: "synthetic"
+  batch_size: 32
+  num_workers: 4
+  train_split: 0.7
+  val_split: 0.15
+  test_split: 0.15
+
+# Training settings
+training:
+  epochs: 100
+  learning_rate: 0.001
+  weight_decay: 1e-4
+  patience: 10
+  save_best: true
+  early_stopping: true
+
+# Evaluation settings
+evaluation:
+  metrics: ["map_at_k", "recall_at_k", "dtw_distance"]
+  k_values: [1, 5, 10, 20]
+  similarity_threshold: 0.5
